@@ -1,0 +1,121 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+     contract PatientsRecords {
+
+     address public contractOwner;
+    constructor() public {
+        contractOwner = msg.sender;
+    }
+     modifier onlyOwner() {
+        require(msg.sender == contractOwner);
+        _;
+    }
+
+    
+     struct newPatient {
+     string name;
+     string description;
+     uint8 age;
+     string disease;
+}
+
+    mapping(uint256 => newPatient) patients;
+    function addPatient(
+        uint256 _patientid,
+        string memory _name,
+        string memory _description,
+        uint8 _age,
+        string memory _disease 
+
+    ) public onlyOwner {
+        patients[_patientid].name = _name;
+        patients[_patientid].description = _description;
+        patients[_patientid].age = _age;
+        patients[_patientid].disease = _disease;
+    } 
+      function querypatientById(uint256 _patientid)
+        public view returns(
+          string memory name,
+          string memory description,
+          uint8 age,
+          string memory disease
+        )
+      
+     {
+        return (
+            patients[_patientid].name,
+            patients[_patientid].description,
+            patients[_patientid].age,
+            patients[_patientid].disease
+        );
+    }
+
+     struct newDoctor {
+      string name;
+      string degree;
+      string workplace;
+     }
+    mapping(uint256 => newDoctor) Doctors;
+    function addDoctor(
+      uint256 _Doctorid,
+      string memory _name,
+      string memory _degree,
+      string memory _workplace
+    
+    ) public onlyOwner{
+        Doctors[_Doctorid].name = _name;  
+        Doctors[_Doctorid].degree = _degree;
+        Doctors[_Doctorid].workplace = _workplace;
+        }
+     function queryDoctorById(uint256 _Doctorid)
+        public view returns(
+      string memory name,
+      string memory degree,
+      string memory workplace)
+    {
+      return (
+         Doctors[_Doctorid].name, 
+        Doctors[_Doctorid].degree,
+        Doctors[_Doctorid].workplace
+
+      );
+    }
+
+      struct medicine {
+       string name;
+       uint256 expiryDate;
+       uint256 noOfDose;
+       uint256 price; 
+     }
+     mapping(uint256 => medicine) medicines;
+     function addmedicine(
+      uint256 _medicineid,
+      string memory _name,
+      uint256 _expiryDate,
+      uint256 _noOfDose,
+      uint256 _price
+     ) public onlyOwner{
+         medicines[_medicineid].name =_name;
+         medicines[_medicineid].expiryDate = _expiryDate;
+         medicines[_medicineid].noOfDose = _noOfDose;
+         medicines[_medicineid].price = _price;
+     }
+        function querymedicineById(uint256 _medicineid)
+        public view returns(
+       string memory name,
+       uint256 expiryDate,
+       uint256 noOfDose,
+       uint256 price
+        )
+        {
+        return (
+         medicines[_medicineid].name, 
+         medicines[_medicineid].expiryDate,
+         medicines[_medicineid].noOfDose, 
+         medicines[_medicineid].price
+        
+        );
+        }
+}
+
